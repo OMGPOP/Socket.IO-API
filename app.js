@@ -20,7 +20,7 @@ app.get('/', function(req, res){
 app.listen(3000);
 
 // setup socket
-SocketAPI = require('./lib/SocketAPI');
+var SocketAPI = require('./lib/SocketAPI');
 
 var socketApi = new SocketAPI(app);
 socketApi.mapCall('connection',connection);
