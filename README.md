@@ -1,7 +1,5 @@
 Socket.IO-API
-=========
-
-## Organize your socket.io calls into an API
+=============
 
 Socket.IO-API is an extension to socket.io that helps you organize your socket.io calls.
 
