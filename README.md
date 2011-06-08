@@ -1,18 +1,20 @@
 Socket.IO-API
 =========
 
-### Organize your socket.io calls into an API
+## Organize your socket.io calls into an API
 
 Socket.IO-API is an extension to socket.io that helps you organize your socket.io calls.
 
-### Client usage
+## Client usage
+
+	<script src="/socket.io/socket.io.js"></script>
 
 	var socket = new SocketAPI();
 	socket.init("",3000);
 	socket.api("status",{ status: "ready" });
 	socket.api("action",{ action: "jump" });
 
-### Server usage
+## Server usage
 
 	SocketAPI = require('./lib/SocketAPI');
 	var socketApi = new SocketAPI(app);
@@ -29,33 +31,33 @@ Socket.IO-API is an extension to socket.io that helps you organize your socket.i
 		console.log(data);
 	}
 
-### Client documentation
+## Client documentation
 
-#### Properties:
+### Properties:
 
 - *socket*
 
 	Reference to socket.io object
 
-#### Methods:
+### Methods:
 
 - *init()*
 
-	Creates socket listeners
+	Creates socket object and attempts to connect
 
 - *api(call, data)*
 
 	Make a socket.io api call passing the JSON encoded data
 
-### Server documentation
+## Server documentation
 
-#### Properties:
+### Properties:
 
 - *socket*
 
 	Reference to socket.io object
 
-#### Methods:
+### Methods:
 
 - *init()*
 
