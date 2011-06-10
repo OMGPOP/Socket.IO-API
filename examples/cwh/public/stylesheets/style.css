@@ -1,0 +1,9 @@
+body{font:14px "Lucida Grande",Helvetica,Arial,sans-serif;}
+a{color:#00B7FF;}
+button{font-size:18px;padding:10px;}
+.avatar_a{position:absolute;width:48px;height:48px;top:0px;left:0px;background:url('/images/avatar_a.png') center center;background-size:100%;}
+.avatar_b{position:absolute;width:48px;height:48px;top:0px;left:0px;background:url('/images/avatar_b.png') center center;background-size:100%;}
+.avatar_c{position:absolute;width:48px;height:48px;top:0px;left:0px;background:url('/images/avatar_c.png') center center;background-size:100%;}
+.avatar_d{position:absolute;width:48px;height:48px;top:0px;left:0px;background:url('/images/avatar_d.png') center center;background-size:100%;}
+.avatar_e{position:absolute;width:48px;height:48px;top:0px;left:0px;background:url('/images/avatar_e.png') center center;background-size:100%;}
+.avatar_f{position:absolute;width:48px;height:48px;top:0px;left:0px;background:url('/images/avatar_f.png') center center;background-size:100%;}
