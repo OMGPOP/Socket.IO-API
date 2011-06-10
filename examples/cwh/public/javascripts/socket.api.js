@@ -9,9 +9,8 @@ var SocketAPI = function() {
 		socketApi.socket.connect();
 		socketApi.socket.on('message', function(x) { if (x['api']) { socketApi.execute(x['api'],x['data']) } })
 	}
-	this.api = function(api,data) {
-		var req = { api: api, data: data };
-		socketApi.socket.send(req);
+	this.send = function(api,data) {
+		socketApi.socket.send({ api: api, data: data });
 	}
 	this.mapCall = function(api,execute) {
 	  socketApi.calls[api] = execute
