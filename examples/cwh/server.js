@@ -25,7 +25,7 @@ var SocketAPI = require('../../lib/SocketAPI');
 var socketApi = new SocketAPI(app);
 var rooms = {};
 
-socketApi.mapCall('connection', function(client) { var data={};data.user_id=client.sessionId;client.send({api:"initialize",data:data}) });
+socketApi.mapCall('connection', function(client) { var data={};data.user_id=client.sessionId;client.send({api:"user.initialize",data:data}) });
 
 socketApi.mapCall('disconnect', function(client) { 
   if (client.username) {
@@ -34,7 +34,7 @@ socketApi.mapCall('disconnect', function(client) {
     if (pos >= 0) rooms[client.username].splice(pos, 1);
     if (rooms[client.username].length > 0) {
       rooms[client.username].forEach (function(c) {
-        c.send({ api: "destroy_user", data: { user_id: client.sessionId } })
+        c.send({ api: "user.destroy", data: { user_id: client.sessionId } })
       })
     }
   }
@@ -42,16 +42,21 @@ socketApi.mapCall('disconnect', function(client) {
 
 socketApi.mapCall('message', function(client,data) { console.log(client.sessionId);console.log(data); });
 
-socketApi.mapCall('join', function(client,data) {
+socketApi.mapCall('user.join', function(client,data) {
   client.username = data.room;
   console.log(client.sessionId + " joined " + client.username);
   if (typeof(rooms[client.username]) == "undefined") rooms[client.username] = []
   rooms[client.username].forEach (function(c) {
-    c.send({ api: "create_user", data: { user_id: client.sessionId } })
-    client.send({ api: "create_user", data: { user_id: c.sessionId } })
+    c.send({ api: "user.create", data: { user_id: client.sessionId } })
+    client.send({ api: "user.create", data: { user_id: c.sessionId } })
   })
   rooms[client.username].push(client)
-  client.send({ api: "joined", data: { room: client.username } })
+  client.send({ api: "user.joined", data: { room: client.username } })
+});
+
+socketApi.mapCall('avatar.move',function(client,data) {
+	data['user_id'] = client.sessionId;
+  client.broadcast({ api: "avatar.move", data: data })
 });
 
 socketApi.mapCall('avatar.select', function(client,data) {
@@ -61,9 +66,5 @@ socketApi.mapCall('avatar.select', function(client,data) {
   })
 });
 
-socketApi.mapCall('move',function(client,data) {
-	data['user_id'] = client.sessionId;
-  client.broadcast({ api: "move", data: data })
-});
 
 socketApi.init();
