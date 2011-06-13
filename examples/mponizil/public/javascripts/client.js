@@ -1,5 +1,5 @@
-var socket = new SocketAPI();
-socket.init("",3000);
+var socketApi = new SocketAPI();
+socketApi.init("",3000);
 
 $(function() {
 	events();
@@ -11,7 +11,7 @@ function events() {
 			action: "jump"
 		};
 		
-		socket.api("action",action);
+		socketApi.send("action",action);
 	})
 	
   $("#left").click(function() {
@@ -19,7 +19,7 @@ function events() {
 			action: "left"
 		};
 		
-		socket.api("action",action);
+		socketApi.send("action",action);
 	})
 	
   $("#private_message").click(function() {
@@ -31,7 +31,7 @@ function events() {
 			}
 		};
 		
-		socket.api("message",message);
+		socketApi.send("message",message);
 	})
 	
   $("#shout").click(function() {
@@ -42,7 +42,7 @@ function events() {
 			}
 		};
 		
-		socket.api("message",message);
+		socketApi.send("message",message);
 	})
 	
   $("#ready").click(function() {
@@ -50,7 +50,7 @@ function events() {
 			status: "ready"
 		};
 		
-		socket.api("status",status);
+		socketApi.send("status",status);
 	})
 	
   $("#admin_message").click(function() {
@@ -61,6 +61,6 @@ function events() {
 			}
 		};
 		
-		socket.api("message",message);
+		socketApi.send("message",message);
 	})
 }
