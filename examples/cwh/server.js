@@ -22,7 +22,8 @@ app.listen(3000);
 // setup socket
 var SocketAPI = require('../../lib/SocketAPI');
 
-var socketApi = new SocketAPI(app);
+var socketApi = new SocketAPI();
+socketApi.init(app);
 var rooms = {};
 
 socketApi.mapCall('connection', function(client) { var data={};data.user_id=client.sessionId;client.send({api:"user.initialize",data:data}) });
@@ -65,6 +66,3 @@ socketApi.mapCall('avatar.select', function(client,data) {
     c.send({ api: "avatar.select", data: data })
   })
 });
-
-
-socketApi.init();

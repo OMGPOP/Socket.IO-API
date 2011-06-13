@@ -22,13 +22,14 @@ app.listen(3000);
 // setup socket
 var SocketAPI = require('../../lib/SocketAPI');
 
-var socketApi = new SocketAPI(app);
+var socketApi = new SocketAPI();
+socketApi.init(app);
+
 socketApi.mapCall('connection',connection);
 socketApi.mapCall('disconnect',disconnect);
 socketApi.mapCall('message',message);
 socketApi.mapCall('status',status);
 socketApi.mapCall('action',action);
-socketApi.init();
 
 function connection(client) {
 	console.log(client.sessionId);
