@@ -14,10 +14,7 @@ Socket.IO-API is an extension to socket.io that helps you organize your socket.i
 	socketApi.send("user.status", { status: "ready" });
 	socketApi.send("user.action", { action: "jump" });
 	
-	socketApi.mapCall("user.action", function(data) {
-		console.log(data);
-	})
-	socketApi.mapCall("user.status", function(data) {
+	socketApi.mapCall("admin.announcement", function(data) {
 		console.log(data);
 	})
 
@@ -28,8 +25,7 @@ Socket.IO-API is an extension to socket.io that helps you organize your socket.i
 	var socketApi = new SocketAPI();
 	socketApi.init(app);
 	
-	socketApi.send("user.status", { status: "ready" })
-	socketApi.send("user.action", { action: "jump" })
+	socketApi.send("admin.announcement", { message: "hey everyone!" })
 	
 	socketApi.mapCall("user.status", function(client,data) {
 		console.log(client.sessionId);
