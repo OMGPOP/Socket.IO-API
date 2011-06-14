@@ -1,0 +1,20 @@
+{
+    "name": "socket.io-api"
+  , "description": "RPC calls for socket.io"
+  , "version": "0.1"
+  , "author": "Misha Ponizil <misha@omgpop.com>"
+  , "contributors": [
+        { "name": "Misha Ponizil", "email": "misha@omgpop.com" }
+      , { "name": "Chris Hold", "email": "chris@omgpop.com" }
+    ]
+  , "licenses": [{
+        "type": "MIT"
+      , "url": "http://github.com/learnboost/Socket.IO-node/raw/master/README.md"
+    }]
+  , "repository": {
+        "type": "git"
+      , "url": "https://github.com/OMGPOP/Socket.IO-API"
+    }
+  , "engine": [ "node >=0.4.8" ]
+  , "main": "./index"
+}

@@ -6,17 +6,28 @@ Socket.IO-API is an extension to socket.io that helps you organize your socket.i
 ## Client usage
 
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="/client/socket.api.js"></script>
+	<script src="/client/socket.io-api.js"></script>
 
 	var socketApi = new SocketAPI();
 	socketApi.init("",3000);
 	
+	// send api commands to server
 	socketApi.send("user.status", { status: "ready" });
 	socketApi.send("user.action", { action: "jump" });
 	
-	socketApi.mapCall("admin.announcement", function(data) {
+	// bind to commands from server
+	socketApi.on("user.action", function(data) {
 		console.log(data);
 	})
+	socketApi.on("user.status", function(data) {
+		console.log(data);
+	})
+	
+	// now with callbacks!
+	socketApi.send("user.list", {}, function(data) {
+	  console.log(data)
+	})
+  
 
 ## Server usage
 
@@ -24,17 +35,24 @@ Socket.IO-API is an extension to socket.io that helps you organize your socket.i
 	
 	var socketApi = new SocketAPI();
 	socketApi.init(app);
-	
-	socketApi.send("admin.announcement", { message: "hey everyone!" })
-	
-	socketApi.mapCall("user.status", function(client,data) {
-		console.log(client.sessionId);
-		console.log(data);
-	});
-	socketApi.mapCall("user.action", function(client,data) {
-		console.log(client.sessionId);
-		console.log(data);
-	});
+	// default connection/disconnect/message handlers
+	socketApi.on('connection', function(client) { 
+	  console.log(client.sessionId + " connect")
+	})
+	socketApi.on('disconnect', function(client) {
+	  console.log(client.sessionId + " disconnect")
+	})
+	socketApi.on('message', function(client,data) {
+	  console.log(client.sessionId + " " + data)
+	})
+	// example api-specific function
+	socketApi.on('user.join', function(client,data) {
+	  console.log(client.sessionId + " user.join " + data)
+	})
+	// example api-specific with client-side callback
+	socketApi.on('user.list', function(client,data) {
+	  client.send({ api: "user.list", data: response, cb: data['cb'] })
+	})
 
 ## Client documentation
 
@@ -50,7 +68,7 @@ Socket.IO-API is an extension to socket.io that helps you organize your socket.i
 
 	Creates socket object and attempts to connect
 
-- *mapCall(call, function)*
+- *on(call, function)*
 
 	Call function upon receiving call
 
@@ -72,7 +90,7 @@ Socket.IO-API is an extension to socket.io that helps you organize your socket.i
 
 	Reference to http.Server instance of node
 
-- *mapCall(call, function)*
+- *on(call, function)*
 
 	Call function upon receiving call
 

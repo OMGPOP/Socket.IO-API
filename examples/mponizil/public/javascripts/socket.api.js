@@ -12,7 +12,7 @@ var SocketAPI = function() {
 	this.send = function(api,data) {
 		socketApi.socket.send({ api: api, data: data });
 	}
-	this.mapCall = function(api,execute) {
+	this.on = function(api,execute) {
 	  socketApi.calls[api] = execute
 	}
 	this.execute = function(api,data){
