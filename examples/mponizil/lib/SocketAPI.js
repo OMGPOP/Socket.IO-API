@@ -27,7 +27,7 @@ var SocketAPI = function(app) {
 	}
 	
 	this.calls = [];
-	this.mapCall = function(call,fn) {
+	this.on = function(call,fn) {
 		if(!socketApi.initialized) socketApi.calls.push({ call: call, fn: fn });
 		else console.log("can't add calls after initialized!");
 	}

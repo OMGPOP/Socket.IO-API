@@ -25,11 +25,11 @@ var SocketAPI = require('../../lib/SocketAPI');
 var socketApi = new SocketAPI();
 socketApi.init(app);
 
-socketApi.mapCall('connection',connection);
-socketApi.mapCall('disconnect',disconnect);
-socketApi.mapCall('message',message);
-socketApi.mapCall('status',status);
-socketApi.mapCall('action',action);
+socketApi.on('connection',connection);
+socketApi.on('disconnect',disconnect);
+socketApi.on('message',message);
+socketApi.on('status',status);
+socketApi.on('action',action);
 
 function connection(client) {
 	console.log(client.sessionId);

@@ -26,9 +26,9 @@ var socketApi = new SocketAPI();
 socketApi.init(app);
 var rooms = {};
 
-socketApi.mapCall('connection', function(client) { var data={};data.user_id=client.sessionId;client.send({api:"user.initialize",data:data}) });
+socketApi.on('connection', function(client) { var data={};data.user_id=client.sessionId;client.send({api:"user.initialize",data:data}) });
 
-socketApi.mapCall('disconnect', function(client) { 
+socketApi.on('disconnect', function(client) { 
   if (client.username) {
     console.log(client.sessionId + " left " + client.username);
     var pos = rooms[client.username].indexOf(client);
@@ -41,9 +41,9 @@ socketApi.mapCall('disconnect', function(client) {
   }
 });
 
-socketApi.mapCall('message', function(client,data) { console.log(client.sessionId);console.log(data); });
+socketApi.on('message', function(client,data) { console.log(client.sessionId);console.log(data); });
 
-socketApi.mapCall('user.join', function(client,data) {
+socketApi.on('user.join', function(client,data) {
   client.username = data.room;
   console.log(client.sessionId + " joined " + client.username);
   if (typeof(rooms[client.username]) == "undefined") rooms[client.username] = []
@@ -55,14 +55,22 @@ socketApi.mapCall('user.join', function(client,data) {
   client.send({ api: "user.joined", data: { room: client.username } })
 });
 
-socketApi.mapCall('avatar.move',function(client,data) {
+socketApi.on('avatar.move',function(client,data) {
 	data['user_id'] = client.sessionId;
   client.broadcast({ api: "avatar.move", data: data })
 });
 
-socketApi.mapCall('avatar.select', function(client,data) {
+socketApi.on('avatar.select', function(client,data) {
   data['user_id'] = client.sessionId
   rooms[client.username].forEach (function(c) {
     c.send({ api: "avatar.select", data: data })
   })
+});
+
+//example w/ callback
+socketApi.on('user.list', function(client,data) {
+  if (client.username) {
+    var response = rooms[client.username].map(function(x) { return x.sessionId })
+    client.send({ api: "user.list", data: response, cb: data['cb'] })
+  }
 });
