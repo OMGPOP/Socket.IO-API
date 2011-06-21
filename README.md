@@ -1,3 +1,5 @@
+**DEPRECATED** -- USE [Socket.IO](http://socket.io/) >= 0.7
+
 Socket.IO-API
 =============
 
